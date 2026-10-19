@@ -11,7 +11,7 @@ https://qazwsxzhaozhe.github.io/eu-label-printer/
 1. 用 Chrome 或 Edge 打开在线地址。
 2. 在 Model Number 输入框中输入或扫描型号。
 3. 设置标签数量，点击“打印标签”。
-4. 打印时选择 80 × 130 mm 标签纸、无边距、100% 缩放。
+4. 打印时选择 80 × 130 mm 标签纸，页边距必须选择“无”或 None，缩放选择 100%。
 
 ## 首次打印校准
 
@@ -22,5 +22,6 @@ https://qazwsxzhaozhe.github.io/eu-label-printer/
 ## 说明
 
 - 标签按 80 × 130 mm 原始比例直接打印。
+- 程序本身不添加任何页边距，标签背景会铺满整张标签纸。
 - 每台电脑需要安装对应的标签打印机驱动。
 - Model Number 只在浏览器本地处理，不会上传到服务器。

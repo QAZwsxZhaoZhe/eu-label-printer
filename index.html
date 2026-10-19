@@ -494,7 +494,7 @@
 
     @page {
       size: 80mm 130mm;
-      margin: 0;
+      margin: 0 !important;
     }
 
     @media (max-width: 900px) {
@@ -546,8 +546,8 @@
       body {
         width: 80mm;
         min-height: 0;
-        margin: 0;
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
         background: #fff;
       }
 
@@ -561,6 +561,12 @@
         display: none !important;
       }
 
+      .print-root,
+      .calibration-root {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
       .print-root {
         display: block !important;
       }
@@ -568,6 +574,9 @@
       .print-label {
         width: 80mm;
         height: 130mm;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
         overflow: hidden;
         break-after: page;
         page-break-after: always;
@@ -590,10 +599,20 @@
         position: relative;
         width: 80mm;
         height: 130mm;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
         overflow: hidden;
         background: #fff;
         color: #000;
         font-family: Arial, "Microsoft YaHei", sans-serif;
+      }
+
+      .print-label > .label,
+      .print-label .label-template-image {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
       }
 
       .calibration-frame {
