@@ -378,7 +378,7 @@
     .preview-label.label-frame {
       position: relative;
       width: min(100%, 380px);
-      aspect-ratio: 2 / 3;
+      aspect-ratio: 8 / 13;
       overflow: hidden;
       filter: drop-shadow(0 14px 30px rgba(16, 24, 40, .18));
     }
@@ -493,7 +493,7 @@
     }
 
     @page {
-      size: 100mm 150mm;
+      size: 80mm 130mm;
       margin: 0;
     }
 
@@ -544,7 +544,7 @@
     @media print {
       html,
       body {
-        width: 100mm;
+        width: 80mm;
         min-height: 0;
         margin: 0;
         padding: 0;
@@ -566,8 +566,8 @@
       }
 
       .print-label {
-        width: 100mm;
-        height: 150mm;
+        width: 80mm;
+        height: 130mm;
         overflow: hidden;
         break-after: page;
         page-break-after: always;
@@ -588,8 +588,8 @@
 
       .calibration-page {
         position: relative;
-        width: 100mm;
-        height: 150mm;
+        width: 80mm;
+        height: 130mm;
         overflow: hidden;
         background: #fff;
         color: #000;
@@ -605,8 +605,8 @@
       .calibration-title {
         position: absolute;
         top: 28mm;
-        left: 15mm;
-        right: 15mm;
+        left: 8mm;
+        right: 8mm;
         text-align: center;
         font-size: 4.5mm;
         font-weight: 700;
@@ -616,8 +616,8 @@
       .calibration-subtitle {
         position: absolute;
         top: 47mm;
-        left: 15mm;
-        right: 15mm;
+        left: 8mm;
+        right: 8mm;
         text-align: center;
         font-size: 2.7mm;
         line-height: 1.5;
@@ -697,9 +697,9 @@
 
       .calibration-end {
         position: absolute;
-        right: 15mm;
+        right: 8mm;
         bottom: 8mm;
-        left: 15mm;
+        left: 8mm;
         padding-top: 2mm;
         border-top: .3mm solid #000;
         text-align: center;
@@ -725,7 +725,7 @@
           <p>发货标签工作台</p>
         </div>
       </div>
-      <div class="format-badge">100 × 150 mm</div>
+      <div class="format-badge">80 × 130 mm</div>
     </div>
   </header>
 
@@ -802,7 +802,7 @@
           <path d="m13.5 4.5 2 2"/>
           <path d="m4.5 13.5 2 2"/>
         </svg>
-        <span>打印 100 × 150 校准页</span>
+        <span>打印 80 × 130 校准页</span>
       </button>
 
       <hr class="divider">
@@ -953,7 +953,7 @@
       function buildCalibrationPage() {
         var ticks = [];
 
-        for (var value = 5; value <= 145; value += 5) {
+        for (var value = 5; value <= 125; value += 5) {
           var top = value;
           var isMajor = value % 10 === 0;
           var tickClass = "calibration-tick" + (isMajor ? " major" : "");
@@ -972,11 +972,11 @@
           '<div class="calibration-page">' +
             '<div class="calibration-frame"></div>' +
             '<div class="calibration-size-box"><span>10 mm</span></div>' +
-            '<div class="calibration-title">100 × 150 mm<br>打印校准页</div>' +
-            '<div class="calibration-subtitle">纸张 100 × 150 mm · 缩放 100% · 无边距<br>量一下黑色方框外沿，应为 10 × 10 mm</div>' +
+            '<div class="calibration-title">80 × 130 mm<br>打印校准页</div>' +
+            '<div class="calibration-subtitle">纸张 80 × 130 mm · 缩放 100% · 无边距<br>量一下黑色方框外沿，应为 10 × 10 mm</div>' +
             ticks.join("") +
             '<div class="calibration-cutoff"><span>100 mm</span></div>' +
-            '<div class="calibration-end">标尺应到达纸张底边 · 页面高度 150 mm</div>' +
+            '<div class="calibration-end">标尺应到达纸张底边 · 页面高度 130 mm</div>' +
           "</div>";
       }
 
