@@ -286,6 +286,35 @@
       padding: 0;
     }
 
+    .calibration-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      height: 40px;
+      margin-top: 14px;
+      padding: 0 14px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+
+    .calibration-button:hover {
+      border-color: #98a2b3;
+      background: #f8fafb;
+    }
+
+    .calibration-button:focus-visible {
+      outline: 3px solid rgba(15, 118, 110, .18);
+      outline-offset: 1px;
+    }
+
     .divider {
       height: 1px;
       margin: 18px 0 0;
@@ -458,7 +487,8 @@
       top: 74.050cqw;
     }
 
-    .print-root {
+    .print-root,
+    .calibration-root {
       display: none;
     }
 
@@ -546,6 +576,135 @@
       .print-label:last-child {
         break-after: auto;
         page-break-after: auto;
+      }
+
+      body.calibration-mode .print-root {
+        display: none !important;
+      }
+
+      body.calibration-mode .calibration-root {
+        display: block !important;
+      }
+
+      .calibration-page {
+        position: relative;
+        width: 100mm;
+        height: 150mm;
+        overflow: hidden;
+        background: #fff;
+        color: #000;
+        font-family: Arial, "Microsoft YaHei", sans-serif;
+      }
+
+      .calibration-frame {
+        position: absolute;
+        inset: 5mm;
+        border: .4mm solid #000;
+      }
+
+      .calibration-title {
+        position: absolute;
+        top: 28mm;
+        left: 15mm;
+        right: 15mm;
+        text-align: center;
+        font-size: 4.5mm;
+        font-weight: 700;
+        line-height: 1.25;
+      }
+
+      .calibration-subtitle {
+        position: absolute;
+        top: 47mm;
+        left: 15mm;
+        right: 15mm;
+        text-align: center;
+        font-size: 2.7mm;
+        line-height: 1.5;
+      }
+
+      .calibration-size-box {
+        position: absolute;
+        top: 15mm;
+        left: 12mm;
+        width: 10mm;
+        height: 10mm;
+        border: .5mm solid #000;
+      }
+
+      .calibration-size-box span {
+        position: absolute;
+        top: 11mm;
+        left: -2mm;
+        width: 16mm;
+        text-align: center;
+        font-size: 2.1mm;
+      }
+
+      .calibration-tick {
+        position: absolute;
+        left: 5mm;
+        width: 2.5mm;
+        height: .25mm;
+        background: #000;
+        transform: translateY(-.125mm);
+      }
+
+      .calibration-tick.major {
+        width: 5mm;
+      }
+
+      .calibration-tick.right {
+        right: 5mm;
+        left: auto;
+      }
+
+      .calibration-tick-label {
+        position: absolute;
+        left: 11mm;
+        color: #000;
+        font-size: 2.1mm;
+        line-height: 1;
+        transform: translateY(-50%);
+      }
+
+      .calibration-tick-label.right {
+        right: 11mm;
+        left: auto;
+        text-align: right;
+      }
+
+      .calibration-cutoff {
+        position: absolute;
+        top: 100mm;
+        right: 5mm;
+        left: 5mm;
+        border-top: .45mm dashed #000;
+      }
+
+      .calibration-cutoff span {
+        position: absolute;
+        top: -4.5mm;
+        left: 50%;
+        padding: 0 2mm;
+        background: #fff;
+        font-size: 2.5mm;
+        font-weight: 700;
+        line-height: 1;
+        transform: translateX(-50%);
+        white-space: nowrap;
+      }
+
+      .calibration-end {
+        position: absolute;
+        right: 15mm;
+        bottom: 8mm;
+        left: 15mm;
+        padding-top: 2mm;
+        border-top: .3mm solid #000;
+        text-align: center;
+        font-size: 2.6mm;
+        font-weight: 700;
       }
     }
   </style>
@@ -635,6 +794,17 @@
         </button>
       </div>
 
+      <button class="calibration-button" id="calibrationButton" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21.3 8.7 8.7 21.3a1 1 0 0 1-1.4 0L2.7 16.7a1 1 0 0 1 0-1.4L15.3 2.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4Z"/>
+          <path d="m7.5 10.5 2 2"/>
+          <path d="m10.5 7.5 2 2"/>
+          <path d="m13.5 4.5 2 2"/>
+          <path d="m4.5 13.5 2 2"/>
+        </svg>
+        <span>打印 100 × 150 校准页</span>
+      </button>
+
       <hr class="divider">
 
       <div class="small-note">
@@ -663,6 +833,7 @@
   </main>
 
   <div class="print-root" id="printRoot" aria-hidden="true"></div>
+  <div class="calibration-root" id="calibrationRoot" aria-hidden="true"></div>
 
   <script>
     (function () {
@@ -697,9 +868,11 @@
       var quantityMinus = document.getElementById("quantityMinus");
       var quantityPlus = document.getElementById("quantityPlus");
       var printButton = document.getElementById("printButton");
+      var calibrationButton = document.getElementById("calibrationButton");
       var clearButton = document.getElementById("clearButton");
       var previewLabel = document.getElementById("previewLabel");
       var printRoot = document.getElementById("printRoot");
+      var calibrationRoot = document.getElementById("calibrationRoot");
       var modelFontSize = BASE_FONT_CQW;
 
       previewLabel.innerHTML = LABEL_CONTENT_HTML;
@@ -771,14 +944,58 @@
       }
 
       function printLabels() {
+        document.body.classList.remove("calibration-mode");
         updatePreview();
         buildPrintLabels();
         window.print();
       }
 
+      function buildCalibrationPage() {
+        var ticks = [];
+
+        for (var value = 5; value <= 145; value += 5) {
+          var top = value;
+          var isMajor = value % 10 === 0;
+          var tickClass = "calibration-tick" + (isMajor ? " major" : "");
+          var labelClass = "calibration-tick-label";
+          var showLabel = isMajor && value !== 100;
+          var label = showLabel ? '<span class="' + labelClass + '" style="top:' + top + 'mm">' + value + '</span>' : "";
+          var rightLabel = showLabel ? '<span class="' + labelClass + ' right" style="top:' + top + 'mm">' + value + '</span>' : "";
+
+          ticks.push('<span class="' + tickClass + '" style="top:' + top + 'mm"></span>');
+          ticks.push('<span class="' + tickClass + ' right" style="top:' + top + 'mm"></span>');
+          ticks.push(label);
+          ticks.push(rightLabel);
+        }
+
+        calibrationRoot.innerHTML =
+          '<div class="calibration-page">' +
+            '<div class="calibration-frame"></div>' +
+            '<div class="calibration-size-box"><span>10 mm</span></div>' +
+            '<div class="calibration-title">100 × 150 mm<br>打印校准页</div>' +
+            '<div class="calibration-subtitle">纸张 100 × 150 mm · 缩放 100% · 无边距<br>量一下黑色方框外沿，应为 10 × 10 mm</div>' +
+            ticks.join("") +
+            '<div class="calibration-cutoff"><span>100 mm</span></div>' +
+            '<div class="calibration-end">标尺应到达纸张底边 · 页面高度 150 mm</div>' +
+          "</div>";
+      }
+
+      function printCalibration() {
+        document.body.classList.add("calibration-mode");
+        buildCalibrationPage();
+        window.print();
+      }
+
       window.addEventListener("beforeprint", function () {
+        if (document.body.classList.contains("calibration-mode")) {
+          return;
+        }
         updatePreview();
         buildPrintLabels();
+      });
+
+      window.addEventListener("afterprint", function () {
+        document.body.classList.remove("calibration-mode");
       });
 
       modelInput.addEventListener("input", updatePreview);
@@ -814,6 +1031,7 @@
       });
 
       printButton.addEventListener("click", printLabels);
+      calibrationButton.addEventListener("click", printCalibration);
 
       document.addEventListener("keydown", function (event) {
         if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "p") {
