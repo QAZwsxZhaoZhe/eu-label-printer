@@ -349,7 +349,7 @@
     .preview-label.label-frame {
       position: relative;
       width: min(100%, 380px);
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 2 / 3;
       overflow: hidden;
       filter: drop-shadow(0 14px 30px rgba(16, 24, 40, .18));
     }
@@ -359,9 +359,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 150%;
-      transform: scale(0.6666667);
-      transform-origin: top center;
+      height: 100%;
     }
 
     .label {
@@ -465,7 +463,7 @@
     }
 
     @page {
-      size: 100mm 100mm;
+      size: 100mm 150mm;
       margin: 0;
     }
 
@@ -539,17 +537,10 @@
 
       .print-label {
         width: 100mm;
-        height: 100mm;
+        height: 150mm;
         overflow: hidden;
         break-after: page;
         page-break-after: always;
-      }
-
-      .print-label > .label {
-        width: 100mm;
-        height: 150mm;
-        transform: scale(0.6666667);
-        transform-origin: top center;
       }
 
       .print-label:last-child {
@@ -575,7 +566,7 @@
           <p>发货标签工作台</p>
         </div>
       </div>
-      <div class="format-badge">100 × 100 mm</div>
+      <div class="format-badge">100 × 150 mm</div>
     </div>
   </header>
 
