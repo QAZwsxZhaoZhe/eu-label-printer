@@ -494,6 +494,7 @@
 
     @page {
       size: 100mm 150mm;
+      margin: 0;
     }
 
     @media (max-width: 900px) {
@@ -545,8 +546,8 @@
       body {
         width: 100mm;
         min-height: 0;
-        margin: 0;
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
         background: #fff;
       }
 
@@ -564,12 +565,29 @@
         display: block !important;
       }
 
+      .print-root,
+      .calibration-root {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
       .print-label {
-        width: 100mm;
-        height: 150mm;
+        width: 100mm !important;
+        height: 150mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        box-sizing: border-box;
         overflow: hidden;
         break-after: page;
         page-break-after: always;
+      }
+
+      .print-label > .label,
+      .print-label .label-template-image {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
       }
 
       .print-label:last-child {
@@ -587,8 +605,12 @@
 
       .calibration-page {
         position: relative;
-        width: 100mm;
-        height: 150mm;
+        width: 100mm !important;
+        height: 150mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        box-sizing: border-box;
         overflow: hidden;
         background: #fff;
         color: #000;
@@ -972,7 +994,7 @@
             '<div class="calibration-frame"></div>' +
             '<div class="calibration-size-box"><span>10 mm</span></div>' +
             '<div class="calibration-title">100 × 150 mm<br>打印校准页</div>' +
-            '<div class="calibration-subtitle">纸张 100 × 150 mm · 缩放 100% · 页边距默认<br>量一下黑色方框外沿，应为 10 × 10 mm</div>' +
+            '<div class="calibration-subtitle">纸张 100 × 150 mm · 缩放 100% · 页边距无（None）<br>量一下黑色方框外沿，应为 10 × 10 mm</div>' +
             ticks.join("") +
             '<div class="calibration-cutoff"><span>100 mm</span></div>' +
             '<div class="calibration-end">标尺应到达纸张底边 · 页面高度 150 mm</div>' +
